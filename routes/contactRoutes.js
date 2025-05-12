@@ -7,9 +7,9 @@ import {
   updateContact,
 } from "../controllers/contactsController.js";
 
-const router = Router();
+const contactRouter = Router();
 
-router.route("/").get(getContacts).post(createContact);
-router.route("/:id").get(getContact).put(updateContact).delete(deleteContact);
+contactRouter.route("/").get(getContacts).post(createContact);
+contactRouter.route("/:id").get(getContact).put(updateContact).delete(deleteContact);
 
-export default router;
+export default contactRouter;
