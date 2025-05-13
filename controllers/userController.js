@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import { UserModel } from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 //@description: register new user
 //@route: POST /api/contacts/register
@@ -41,7 +42,35 @@ export const registerUser = asyncHandler(async (req, res) => {
 //@route: POST /api/contacts/login
 //@access: Public
 export const loginUser = asyncHandler(async (req, res) => {
-  res.json({ message: "User logged in" });
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("All fields are required!");
+  }
+
+  //FIND THE USER BY EMAIL
+  const user = await UserModel.findOne({ email });
+
+  //COMPARE REQUESTED PASSWORD WITH THE HASHED PASSWORD ASSOCIATED WITH THE email
+  if (user && (await bcrypt.compare(password, user.password))) {
+    const accessToken = jwt.sign(
+      {
+        user: {
+          username: user.username,
+          email: user.email,
+          id: user.id,
+        },
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: "1m",
+      }
+    );
+    res.status(200).json({ accessToken });
+  } else {
+    res.status(401);
+    throw new Error("Wrong credentials!");
+  }
 });
 
 //@description: get current user
