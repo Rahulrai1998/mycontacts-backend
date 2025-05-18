@@ -4,11 +4,12 @@ import {
   loginUser,
   registerUser,
 } from "../controllers/userController.js";
+import validateToken from "../middleware/validateTokenHandler.js";
 
 const userRouter = Router();
 
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
-userRouter.get("/current-user", currentUser);
+userRouter.get("/current-user", validateToken, currentUser);
 
 export default userRouter;
