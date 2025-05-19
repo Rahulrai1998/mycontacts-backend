@@ -77,6 +77,5 @@ export const loginUser = asyncHandler(async (req, res) => {
 //@route: GET /api/contacts/currentUser
 //@access: Private
 export const currentUser = asyncHandler(async (req, res) => {
-  // {accessToken} = req.body;
-  res.json({ message: "user" });
+  res.json(req.user);
 });

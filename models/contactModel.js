@@ -1,7 +1,12 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 const contactSchema = mongoose.Schema(
   {
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      require: true,
+      ref: "User",
+    },
     name: {
       type: String,
       required: [true, "Name Required!!"],
