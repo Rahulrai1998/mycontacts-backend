@@ -3,7 +3,7 @@ import { ContactSchemaModel } from "../models/contactModel.js";
 
 //@description: get all contacts
 //@route: GET /api/contacts
-//@access: public
+//@access: private
 export const getContacts = asyncHandler(async (req, res) => {
   const contacts = await ContactSchemaModel.find();
   res.status(200).json(contacts);
@@ -11,7 +11,7 @@ export const getContacts = asyncHandler(async (req, res) => {
 
 //@description: create new contact
 //@route: POST /api/contacts
-//@access: public
+//@access: private
 export const createContact = asyncHandler(async (req, res) => {
   const { name, email, phone } = req.body;
   if (!name || !email || !phone) {
@@ -28,7 +28,7 @@ export const createContact = asyncHandler(async (req, res) => {
 
 //@description: get contact
 //@route: GET /api/contacts/:id
-//@access: public
+//@access: private
 export const getContact = asyncHandler(async (req, res) => {
   const contact = await ContactSchemaModel.findById(req.params.id);
   if (!contact) {
@@ -40,7 +40,7 @@ export const getContact = asyncHandler(async (req, res) => {
 
 //@description: update contact
 //@route: PUT /api/contacts/:id
-//@access: public
+//@access: private
 export const updateContact = asyncHandler(async (req, res) => {
   const contact = await ContactSchemaModel.findById(req.params.id);
   if (!contact) {
@@ -58,7 +58,7 @@ export const updateContact = asyncHandler(async (req, res) => {
 
 //@description: delete contact
 //@route: DELETE /api/contacts/:id
-//@access: public
+//@access: private
 export const deleteContact = asyncHandler(async (req, res) => {
   const contact = await ContactSchemaModel.findById(req.params.id);
   if (!contact) {
