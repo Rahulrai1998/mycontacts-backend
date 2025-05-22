@@ -5,7 +5,7 @@ import { ContactSchemaModel } from "../models/contactModel.js";
 //@route: GET /api/contacts
 //@access: private
 export const getContacts = asyncHandler(async (req, res) => {
-  const contacts = await ContactSchemaModel.find();
+  const contacts = await ContactSchemaModel.find({ user_id: req.user.id });
   res.status(200).json(contacts);
 });
 
@@ -22,6 +22,7 @@ export const createContact = asyncHandler(async (req, res) => {
     name,
     email,
     phone,
+    user_id: req.user.id,
   });
   res.status(201).json(contact);
 });
